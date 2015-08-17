@@ -1,13 +1,11 @@
 package me.chanjar.weixin.mp.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.thoughtworks.xstream.XStream;
+import jdk.nashorn.internal.parser.JSONParser;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxMenu;
@@ -791,5 +789,18 @@ public class WxMpServiceImpl implements WxMpService {
     String finalSign = WxCryptUtil.createSign(payInfo, wxMpConfigStorage.getPartnerKey());
     payInfo.put("sign", finalSign);
     return payInfo;
+  }
+
+  public String autoReplyInfo() throws WxErrorException{
+
+      String url = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info";
+      String responseText = get(url, null);
+      WxError wxError = WxError.fromJson(responseText);
+      if (wxError.getErrorCode() == 0) {
+
+          return responseText;
+      } else {
+          throw new WxErrorException(wxError);
+      }
   }
 }

@@ -140,6 +140,7 @@ public class WxConsts {
   ///////////////////////
   // 永久素材类型
   ///////////////////////
+  public static final String MATERIAL_TEXT = "text";
   public static final String MATERIAL_NEWS = "news";
   public static final String MATERIAL_VOICE = "voice";
   public static final String MATERIAL_IMAGE = "image";
